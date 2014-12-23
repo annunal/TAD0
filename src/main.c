@@ -568,13 +568,15 @@ void printLog(char *line)
 
 void printRetry(char *line)
 {
-	char dateName[32];
+	char dateName[32], currDate[32];
 	time_t now = (time_t) time(0);
 	struct tm *gmtm = (struct tm *) gmtime(&now);
     strftime(dateName, sizeof(dateName), "retry_%Y-%m-%d.txt", gmtm);
+	strftime(currDate, sizeof(currDate), "%d\/%m\/%Y %H:%M:%S", gmtm);
 
 	FILE *logFile = fopen(dateName, "a+");
-	fprintf(logFile, line);
+	fprintf(logFile,"echo \"%s\"\n",currDate);
+	fprintf(logFile,"%s\n",line);
 	fclose(logFile);
 }
 
